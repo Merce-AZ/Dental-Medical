@@ -1,0 +1,579 @@
+/* ============================================
+   ESTILOS GENERALES PARA CARRUSELES
+   ============================================ */
+
+.carrusel-wrapper {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+}
+
+.carrusel-container {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    border-radius: var(--radius-lg);
+}
+
+.carrusel-track {
+    display: flex;
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: transform;
+}
+
+.carrusel-item {
+    flex-shrink: 0;
+    width: 100%;
+}
+
+/* ============================================
+   BOTONES DE NAVEGACIÓN BASE
+   (se muestran/ocultan según breakpoint)
+   ============================================ */
+
+.carrusel-btn {
+    display: none;
+}
+
+/* ============================================
+   INDICADORES (DOTS)
+   ============================================ */
+
+.carrusel-dots {
+    display: flex;
+    justify-content: center;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-lg) 0;
+    flex-wrap: wrap;
+}
+
+.dot {
+    width: 12px;
+    height: 12px;
+    border-radius: var(--radius-full);
+    background-color: var(--color-gris-claro);
+    border: 2px solid var(--color-gris);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.dot:hover {
+    background-color: var(--color-gris);
+    transform: scale(1.2);
+}
+
+.dot.activo {
+    background-color: var(--color-primario);
+    border-color: var(--color-primario);
+    width: 28px;
+    border-radius: var(--radius-full);
+}
+
+/* ============================================
+   SECCIÓN CASOS DE ÉXITO
+   ============================================ */
+
+.casos-exito {
+    background-color: var(--color-blanco);
+}
+
+.casos-exito .container {
+    max-width: 100%;
+    padding: 0;
+}
+
+.casos-exito-header {
+    text-align: center;
+    padding: var(--spacing-2xl) var(--spacing-md);
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.casos-exito-header h2 {
+    font-size: var(--fs-4xl);
+    color: var(--color-secundario);
+    margin-bottom: var(--spacing-md);
+}
+
+.casos-exito-header .section-subtitle {
+    margin-bottom: var(--spacing-2xl);
+}
+
+.casos-wrapper {
+    position: relative;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 var(--spacing-md);
+}
+
+.casos-carrusel-container {
+    position: relative;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    background-color: var(--color-claro);
+}
+
+.casos-track {
+    display: flex;
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: transform;
+}
+
+.caso-card {
+    flex-shrink: 0;
+    width: 100%; /* el JS lo sobreescribe según itemsPerView */
+    padding: var(--spacing-2xl);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 400px;
+    background: linear-gradient(135deg, rgba(22, 163, 156, 0.1) 0%, rgba(92, 197, 190, 0.1) 100%);
+}
+
+.caso-card img {
+    max-width: 100%;
+    max-height: 350px;
+    width: auto;
+    height: auto;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-xl);
+    object-fit: cover;
+}
+
+/* Controles casos */
+.casos-controles {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: var(--spacing-xl) var(--spacing-md);
+    max-width: 1200px;
+    margin: 0 auto;
+    gap: var(--spacing-md);
+}
+
+.casos-dots {
+    display: flex;
+    justify-content: center;
+    gap: var(--spacing-sm);
+    flex-grow: 1;
+    flex-wrap: wrap;
+}
+
+/* Flechas de casos — ocultas en desktop */
+.casos-prev,
+.casos-next,
+.casos-prev-mobile,
+.casos-next-mobile {
+    display: none;
+}
+
+/* Mostrar flechas en móvil/tablet */
+@media (max-width: 1024px) {
+    .casos-prev-mobile,
+    .casos-next-mobile {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: var(--color-primario);
+        border: none;
+        color: white;
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-size: 18px;
+        flex-shrink: 0;
+    }
+
+    .casos-prev-mobile:hover,
+    .casos-next-mobile:hover {
+        background: var(--color-secundario);
+        transform: scale(1.1);
+    }
+
+    .casos-prev-mobile:disabled,
+    .casos-next-mobile:disabled {
+        opacity: 0.4;
+        cursor: not-allowed;
+        transform: none;
+    }
+}
+
+/* ============================================
+   SECCIÓN EXPERIENCIAS REALES
+   ============================================ */
+
+.experiencias-reales {
+    padding: 80px 20px;
+    background: linear-gradient(135deg, #f5f5f5 0%, #ffffff 100%);
+    transition: background 0.3s ease;
+}
+
+.experiencias-reales .container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.experiencias-header {
+    text-align: center;
+    margin-bottom: 60px;
+}
+
+.experiencias-header h2 {
+    font-size: var(--fs-4xl);
+    font-weight: 800;
+    color: var(--color-secundario);
+    margin-bottom: var(--spacing-md);
+}
+
+.experiencias-wrapper {
+    max-width: 1000px;
+    margin: 0 auto;
+    position: relative;
+}
+
+.experiencias-carrusel-container {
+    position: relative;
+    overflow: hidden;
+    border-radius: 15px;
+    background: var(--color-blanco);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+}
+
+.experiencias-track {
+    display: flex;
+    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: transform;
+}
+
+.experiencia-card {
+    flex-shrink: 0;
+    width: 100%;
+    padding: 20px;
+}
+
+.video-placeholder {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    background: #000;
+    border-radius: 12px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.video-placeholder video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    cursor: pointer;
+}
+
+/* Flechas experiencias — siempre visibles */
+.experiencias-prev,
+.experiencias-next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: var(--color-primario);
+    border: none;
+    color: white;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    z-index: 10;
+    transition: all 0.3s ease;
+}
+
+.experiencias-prev { left: 10px; }
+.experiencias-next { right: 10px; }
+
+.experiencias-prev:hover,
+.experiencias-next:hover {
+    background: var(--color-secundario);
+    transform: translateY(-50%) scale(1.1);
+}
+
+.experiencias-prev:disabled,
+.experiencias-next:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    transform: translateY(-50%);
+}
+
+.experiencias-controles {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.experiencias-dots {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+/* ============================================
+   SECCIÓN TESTIMONIOS
+   ============================================ */
+
+.testimonios {
+    background-color: var(--color-claro);
+}
+
+.testimonios-header {
+    text-align: center;
+    margin-bottom: var(--spacing-2xl);
+}
+
+.testimonios-header h2 {
+    font-size: var(--fs-4xl);
+    color: var(--color-secundario);
+    margin-bottom: var(--spacing-md);
+}
+
+.testimonios-carrusel-wrapper {
+    position: relative;
+    margin-bottom: var(--spacing-2xl);
+}
+
+.testimonios-carrusel-container {
+    position: relative;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+}
+
+.testimonios-track {
+    display: flex;
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: transform;
+    align-items: stretch;
+}
+
+.testimonio-card {
+    flex-shrink: 0;
+    width: 100%; /* el JS lo ajusta según itemsPerView */
+    padding: var(--spacing-2xl);
+    background-color: var(--color-blanco);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    box-sizing: border-box;
+}
+
+.testimonio-header {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: var(--spacing-lg);
+    gap: var(--spacing-sm);
+}
+
+.testimonio-nombre {
+    font-size: var(--fs-lg);
+    font-weight: 700;
+    color: var(--color-secundario);
+    margin: 0;
+}
+
+.testimonio-rating {
+    display: flex;
+    gap: var(--spacing-xs);
+}
+
+.star {
+    font-size: var(--fs-lg);
+    color: #FFD700;
+}
+
+.star.empty {
+    color: var(--color-gris-claro);
+}
+
+.testimonio-texto {
+    color: var(--color-gris);
+    font-size: var(--fs-base);
+    line-height: 1.8;
+    margin: 0;
+    font-style: italic;
+    border-left: 4px solid var(--color-primario);
+    padding-left: var(--spacing-lg);
+}
+
+/* Controles testimonios */
+.testimonios-controles {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: var(--spacing-lg);
+    padding: var(--spacing-lg) 0;
+}
+
+.testimonios-dots {
+    display: flex;
+    justify-content: center;
+    gap: var(--spacing-sm);
+    flex-grow: 1;
+}
+
+/* Flechas testimonios — ocultas en desktop, visibles en móvil/tablet */
+.testimonios-btn,
+.testimonios-prev,
+.testimonios-next,
+.testimonios-prev-bottom,
+.testimonios-next-bottom {
+    display: none;
+}
+
+@media (max-width: 1024px) {
+    .testimonios-prev-bottom,
+    .testimonios-next-bottom {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: var(--color-primario);
+        border: none;
+        color: white;
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-size: 18px;
+        flex-shrink: 0;
+    }
+
+    .testimonios-prev-bottom:hover,
+    .testimonios-next-bottom:hover {
+        background: var(--color-secundario);
+        transform: scale(1.1);
+    }
+
+    .testimonios-prev-bottom:disabled,
+    .testimonios-next-bottom:disabled {
+        opacity: 0.4;
+        cursor: not-allowed;
+        transform: none;
+    }
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+
+@media (max-width: 767px) {
+    .caso-card {
+        min-height: 300px;
+        padding: var(--spacing-lg);
+    }
+
+    .caso-card img {
+        max-height: 250px;
+    }
+
+    .testimonio-card {
+        width: 100%;
+        margin: 0;
+        padding: var(--spacing-lg);
+    }
+
+    .dot {
+        width: 10px;
+        height: 10px;
+    }
+
+    .dot.activo {
+        width: 24px;
+    }
+
+    .experiencias-reales {
+        padding: 50px 15px;
+    }
+
+    .experiencias-prev,
+    .experiencias-next {
+        width: 36px;
+        height: 36px;
+        font-size: 14px;
+    }
+
+    .experiencias-prev { left: 4px; }
+    .experiencias-next { right: 4px; }
+
+    .experiencia-card {
+        padding: 10px;
+    }
+}
+
+@media (min-width: 768px) {
+    .caso-card {
+        min-height: 450px;
+    }
+}
+
+@media (min-width: 1024px) {
+    .caso-card {
+        min-height: 500px;
+    }
+
+    .experiencias-reales {
+        padding: 100px 40px;
+    }
+}
+
+/* ============================================
+   ANIMACIONES
+   ============================================ */
+
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes zoomIn {
+    from { opacity: 0; transform: scale(0.9); }
+    to   { opacity: 1; transform: scale(1); }
+}
+
+/* ============================================
+   DARK MODE
+   ============================================ */
+
+body.dark-mode .testimonio-card {
+    background-color: var(--color-dark-card);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+body.dark-mode .casos-carrusel-container {
+    background: linear-gradient(135deg, rgba(22, 163, 156, 0.2) 0%, rgba(92, 197, 190, 0.2) 100%);
+}
+
+body.dark-mode .caso-card {
+    background: linear-gradient(135deg, rgba(22, 163, 156, 0.15) 0%, rgba(92, 197, 190, 0.15) 100%);
+}
+
+body.dark-mode .experiencias-reales {
+    background: linear-gradient(135deg, var(--color-dark-bg) 0%, var(--color-dark-bg-secondary) 100%);
+}
+
+body.dark-mode .experiencias-carrusel-container {
+    background: var(--color-dark-card);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+}
+
+body.dark-mode .experiencias-prev,
+body.dark-mode .experiencias-next {
+    background: rgba(22, 163, 156, 0.8);
+}
+
+body.dark-mode .experiencias-prev:hover,
+body.dark-mode .experiencias-next:hover {
+    background: rgba(22, 163, 156, 1);
+}
