@@ -1,0 +1,678 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#0f1d27">
+  <title>Mercé Dental & Medical · Sala de espera</title>
+  <style>
+    :root{
+      --bg:#071a22;
+      --bg-2:#0d2530;
+      --panel:#101f2a;
+      --panel-2:#112732;
+      --paper:#f3f1ed;
+      --ink:#111f29;
+      --muted:#5b6e72;
+      --line:rgba(17,31,41,0.18);
+      --line-strong:rgba(255,255,255,0.12);
+      --teal:#6ec9c4;
+      --teal-2:#87d9d3;
+      --gold:#d8b77f;
+      --gold-soft:#ecd8a8;
+      --white:#f5fbff;
+      --shadow:rgba(0,0,0,0.22);
+      --radius:22px;
+    }
+
+    * { box-sizing: border-box; }
+    html, body{
+      margin: 0;
+      width:100%;
+      height:100%;
+      overflow:hidden;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    body{
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      background:
+        radial-gradient(circle at top left, rgba(136,217,211,0.12), transparent 30%),
+        linear-gradient(135deg, #07151d 0%, #091d27 30%, #07141a 100%);
+    }
+
+    .display{
+      position:relative;
+      width:100vw;
+      height:100vh;
+      overflow:hidden;
+      background:var(--bg);
+      isolation:isolate;
+    }
+
+    .slide{
+      position:absolute;
+      inset:0;
+      display:grid;
+      grid-template-columns: 1.05fr 1fr;
+      opacity:0;
+      visibility:hidden;
+      pointer-events:none;
+      transition: opacity .9s ease, visibility .9s ease;
+      background: var(--paper);
+    }
+
+    .slide.active{
+      opacity:1;
+      visibility:visible;
+      pointer-events:auto;
+    }
+
+    .slide.dark{
+      background: linear-gradient(135deg, rgba(11,25,31,0.98), rgba(12,29,37,0.98));
+      color: var(--white);
+    }
+
+    .copy{
+      z-index:2;
+      display:flex;
+      flex-direction:column;
+      justify-content:space-between;
+      min-width:0;
+      padding: clamp(28px, 2.3vw, 44px) clamp(28px, 3vw, 64px) clamp(28px, 2.6vw, 40px);
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0));
+    }
+
+    .brand-row{
+      display:flex;
+      align-items:center;
+      gap: clamp(12px, 0.9vw, 20px);
+      width:max-content;
+      max-width:100%;
+    }
+
+    .brand-mark{
+      width: clamp(48px, 3.2vw, 72px);
+      height: clamp(48px, 3.2vw, 72px);
+      border-radius:50%;
+      overflow:hidden;
+      background: rgba(255,255,255,0.04);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      border:1px solid rgba(255,255,255,0.12);
+      box-shadow:0 12px 24px rgba(0,0,0,0.12);
+      flex:none;
+    }
+
+    .brand-mark img{
+      display:block;
+      width:100%;
+      height:100%;
+      object-fit:cover;
+    }
+
+    .brand-text{
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      line-height:0.9;
+      letter-spacing:-0.06em;
+      font-weight:700;
+      white-space:nowrap;
+    }
+
+    .brand-name{
+      font-size: clamp(28px, 2.6vw, 56px);
+      font-family: Georgia, "Times New Roman", serif;
+      color: var(--white);
+    }
+
+    .slide:not(.dark) .brand-name{
+      color: var(--ink);
+    }
+
+    .brand-sub{
+      margin-top:4px;
+      font-size: clamp(8px, .65vw, 13px);
+      letter-spacing: .26em;
+      text-transform: uppercase;
+      font-family: Arial, Helvetica, sans-serif;
+      font-weight:700;
+      color: rgba(255,255,255,0.75);
+    }
+
+    .slide:not(.dark) .brand-sub{
+      color: var(--muted);
+    }
+
+    .content{
+      margin-top: clamp(18px, 4vh, 52px);
+      max-width: 760px;
+    }
+
+    .eyebrow{
+      display:flex;
+      align-items:center;
+      gap:14px;
+      font-size: clamp(12px, .9vw, 18px);
+      letter-spacing:.2em;
+      text-transform:uppercase;
+      font-weight:700;
+      color: var(--teal);
+      margin: 0 0 clamp(18px, 2.2vh, 30px);
+      white-space:nowrap;
+    }
+
+    .slide.dark .eyebrow{
+      color: var(--teal-2);
+    }
+
+    .eyebrow::before{
+      content:"";
+      display:block;
+      width: clamp(30px, 2.2vw, 52px);
+      height:2px;
+      background:currentColor;
+    }
+
+    h1,h2{
+      margin:0;
+      font-family: Georgia, "Times New Roman", serif;
+      font-weight:700;
+      letter-spacing:-0.058em;
+      line-height:0.94;
+      color: var(--white);
+    }
+
+    .slide:not(.dark) h1, .slide:not(.dark) h2{
+      color: var(--ink);
+    }
+
+    h1{
+      font-size: clamp(50px, 4.4vw, 96px);
+      max-width: 640px;
+    }
+
+    h2{
+      font-size: clamp(44px, 3.7vw, 82px);
+      max-width: 620px;
+    }
+
+    .lede{
+      margin-top: clamp(18px, 2.2vh, 30px);
+      font-size: clamp(20px, 1.4vw, 30px);
+      line-height:1.35;
+      color: rgba(255,255,255,0.82);
+      max-width: 25em;
+      font-weight:500;
+    }
+
+    .slide:not(.dark) .lede{
+      color: var(--muted);
+    }
+
+    .meta{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      font-size: clamp(12px, .8vw, 16px);
+      font-weight:700;
+      letter-spacing:.12em;
+      text-transform:uppercase;
+      color: rgba(255,255,255,0.72);
+    }
+
+    .slide:not(.dark) .meta{
+      color: var(--ink);
+      opacity:0.85;
+    }
+
+    .meta::before{
+      content:"";
+      width:8px;
+      height:8px;
+      border-radius:50%;
+      background: var(--teal);
+      display:inline-block;
+      box-shadow:0 0 0 5px rgba(110,201,196,0.15);
+    }
+
+    .visual{
+      position:relative;
+      overflow:hidden;
+      background:#dfe8e8;
+      border-left:1px solid rgba(255,255,255,0.1);
+    }
+
+    .visual:before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:linear-gradient(90deg, rgba(10,18,23,0.08), rgba(10,18,23,0.18));
+      z-index:1;
+      pointer-events:none;
+    }
+
+    .visual img{
+      position:absolute;
+      inset:0;
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
+      filter: saturate(.92) contrast(1.04) brightness(.9);
+    }
+
+    .welcome .visual img{ object-position: 58% center; }
+    .services .visual img{ object-position: center; }
+    .team .visual img{ object-position: 50% center; }
+    .contact .visual img{ object-position: center; }
+
+    .info-panel{
+      position:absolute;
+      right: clamp(18px, 2vw, 36px);
+      bottom: clamp(16px, 2.3vh, 30px);
+      z-index:2;
+      width:min(42%, 340px);
+      padding: 18px 18px 14px;
+      border-radius: 18px;
+      background: rgba(10,18,23,0.72);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      border:1px solid rgba(255,255,255,0.14);
+      box-shadow:0 18px 28px rgba(0,0,0,0.18);
+    }
+
+    .info-panel h3{
+      margin:0 0 8px;
+      font-size:12px;
+      letter-spacing:.16em;
+      text-transform:uppercase;
+      font-weight:700;
+      color: var(--teal-2);
+    }
+
+    .info-panel p{
+      margin:0;
+      font-size: clamp(18px, 1.2vw, 24px);
+      line-height:1.3;
+      color: rgba(245,251,255,0.96);
+      font-weight:600;
+    }
+
+    .services-list{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap: clamp(14px, 1.4vw, 22px) clamp(16px, 1.9vw, 34px);
+      margin-top: clamp(22px, 2.9vh, 42px);
+      max-width: 640px;
+    }
+
+    .service{
+      padding-top: 12px;
+      border-top:1px solid var(--line);
+      font-size: clamp(18px, 1.3vw, 28px);
+      line-height:1.2;
+      color: var(--ink);
+      font-weight:600;
+    }
+
+    .slide.dark .service{
+      border-color: var(--line-strong);
+      color: rgba(255,255,255,0.9);
+    }
+
+    .booking-block{
+      display:flex;
+      align-items:center;
+      gap: clamp(20px, 2vw, 38px);
+      margin-top: clamp(22px, 3vh, 44px);
+      flex-wrap:nowrap;
+    }
+
+    .qr{
+      width: clamp(220px, 16vw, 300px);
+      height: clamp(220px, 16vw, 300px);
+      background:#fff;
+      border: 12px solid rgba(255,255,255,0.12);
+      border-radius: 18px;
+      padding: 12px;
+      box-shadow:0 18px 30px rgba(0,0,0,0.14);
+      flex:none;
+    }
+
+    .qr img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
+      border-radius:8px;
+    }
+
+    .booking-copy{
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+      color: rgba(255,255,255,0.88);
+      font-size: clamp(18px, 1.45vw, 28px);
+      line-height:1.2;
+      font-weight:600;
+    }
+
+    .booking-copy strong{
+      display:block;
+      font-size: clamp(30px, 2.3vw, 54px);
+      color: #fff;
+      letter-spacing:-0.05em;
+      font-weight:700;
+    }
+
+    .status{
+      position:absolute;
+      left:0;
+      right:0;
+      bottom:0;
+      z-index:20;
+      height:12px;
+      display:flex;
+      gap:4px;
+      background: rgba(8,18,24,0.95);
+      border-top:1px solid rgba(255,255,255,0.08);
+    }
+
+    .status span{
+      flex:1;
+      background: rgba(255,255,255,0.18);
+      position:relative;
+      overflow:hidden;
+    }
+
+    .status span.current::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      background: linear-gradient(90deg, var(--teal), var(--gold-soft));
+      transform-origin:left center;
+      animation: fill 5.8s linear forwards;
+    }
+
+    .status span.complete{
+      background: linear-gradient(90deg, var(--teal), var(--gold-soft));
+    }
+
+    @keyframes fill{
+      from { transform: scaleX(0); }
+      to   { transform: scaleX(1); }
+    }
+
+    .controls{
+      position:absolute;
+      right: 2vw;
+      bottom: 22px;
+      z-index:30;
+      display:flex;
+      gap:10px;
+      opacity:0;
+      transition: opacity .2s ease;
+    }
+
+    .display:hover .controls,
+    .display:focus-within .controls{
+      opacity:1;
+    }
+
+    .controls button{
+      width: 42px;
+      height:42px;
+      border-radius:50%;
+      border:1px solid rgba(255,255,255,0.2);
+      background: rgba(15,24,30,0.72);
+      color:#fff;
+      font-size: 26px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      cursor:pointer;
+    }
+
+    .controls button:hover{
+      background: rgba(25,38,45,0.95);
+    }
+
+    @media (max-aspect-ratio: 1/1){
+      .slide{
+        grid-template-columns:1fr;
+        grid-template-rows:60% 40%;
+      }
+
+      .copy{
+        padding: 24px 28px 18px;
+      }
+
+      .visual{
+        border-left:none;
+        border-top:1px solid rgba(255,255,255,0.08);
+      }
+
+      .info-panel{
+        width:min(62%, 250px);
+      }
+
+      h1{ font-size: clamp(42px, 8vw, 86px); }
+      h2{ font-size: clamp(36px, 7vw, 72px); }
+      .lede{ font-size: clamp(18px, 3vw, 28px); }
+    }
+
+    @media (prefers-reduced-motion: reduce){
+      .slide, .status span.current::after{
+        transition:none;
+        animation:none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="display" aria-label="Pantalla de Mercé Dental & Medical">
+    <section class="slide dark welcome active" aria-label="Bienvenida">
+      <div class="copy">
+        <div class="brand-row">
+          <div class="brand-mark">
+            <img src="../images/logo-dark.png" alt="Logo de Mercé Dental & Medical">
+          </div>
+          <div class="brand-text">
+            <div class="brand-name">Mercé</div>
+            <div class="brand-sub">Dental &amp; Medical</div>
+          </div>
+        </div>
+
+        <div class="content">
+          <div class="eyebrow">Bienvenidos</div>
+          <h1>Tu sonrisa es<br>nuestra prioridad.</h1>
+          <p class="lede">Atención dental cercana, cálida y profesional para toda la familia.</p>
+        </div>
+
+        <div class="meta">Aguas Zarcas · San Carlos</div>
+      </div>
+
+      <div class="visual">
+        <img src="../images/I5.jpeg" alt="Interior de la clínica Mercé">
+      </div>
+    </section>
+
+    <section class="slide services" aria-label="Servicios">
+      <div class="copy">
+        <div class="brand-row">
+          <div class="brand-mark">
+            <img src="../images/logo.png" alt="Logo de Mercé Dental & Medical">
+          </div>
+          <div class="brand-text">
+            <div class="brand-name">Mercé</div>
+            <div class="brand-sub">Dental &amp; Medical</div>
+          </div>
+        </div>
+
+        <div class="content">
+          <div class="eyebrow">Nuestros servicios</div>
+          <h2>Cuidamos cada sonrisa.</h2>
+
+          <div class="services-list">
+            <div class="service">Limpiezas dentales</div>
+            <div class="service">Ortodoncia</div>
+            <div class="service">Blanqueamiento</div>
+            <div class="service">Implantes</div>
+            <div class="service">Coronas y puentes</div>
+            <div class="service">Odontopediatría</div>
+          </div>
+        </div>
+
+        <div class="meta">Consultá por tu tratamiento</div>
+      </div>
+
+      <div class="visual">
+        <img src="../images/I4.jpeg" alt="Consultorio dental de Mercé">
+      </div>
+    </section>
+
+    <section class="slide team" aria-label="Equipo">
+      <div class="copy">
+        <div class="brand-row">
+          <div class="brand-mark">
+            <img src="../images/logo.png" alt="Logo de Mercé Dental & Medical">
+          </div>
+          <div class="brand-text">
+            <div class="brand-name">Mercé</div>
+            <div class="brand-sub">Dental &amp; Medical</div>
+          </div>
+        </div>
+
+        <div class="content">
+          <div class="eyebrow">Atención personalizada</div>
+          <h2>Estamos aquí<br>para vos.</h2>
+          <p class="lede">La atención de nuestro equipo está pensada para acompañarte con calma, confianza y claridad.</p>
+        </div>
+
+        <div class="meta">Cuidado dental para toda la familia</div>
+      </div>
+
+      <div class="visual">
+        <img src="../images/2.jpg" alt="Equipo de Mercé Dental & Medical">
+      </div>
+    </section>
+
+    <section class="slide dark contact" aria-label="Contacto">
+      <div class="copy">
+        <div class="brand-row">
+          <div class="brand-mark">
+            <img src="../images/logo-dark.png" alt="Logo de Mercé Dental & Medical">
+          </div>
+          <div class="brand-text">
+            <div class="brand-name">Mercé</div>
+            <div class="brand-sub">Dental &amp; Medical</div>
+          </div>
+        </div>
+
+        <div class="content">
+          <div class="eyebrow">Tu próxima visita</div>
+          <h2>Agendá<br>tu cita.</h2>
+          <p class="lede">Escaneá el código y escribinos por WhatsApp para coordinar tu consulta.</p>
+
+          <div class="booking-block">
+            <div class="qr">
+              <img src="qr-whatsapp.png" alt="Código QR para agendar vía WhatsApp">
+            </div>
+            <div class="booking-copy">
+              <span>También podés llamarnos:</span>
+              <strong>8585-5758</strong>
+            </div>
+          </div>
+        </div>
+
+        <div class="meta">Aguas Zarcas · San Carlos</div>
+      </div>
+
+      <div class="visual">
+        <img src="../images/I3.jpeg" alt="Instalaciones de Mercé">
+        <div class="info-panel">
+          <h3>Reserva</h3>
+          <p>Atención cálida, moderna y accesible.</p>
+        </div>
+      </div>
+    </section>
+
+    <div class="status" id="status" aria-label="Progreso de la presentación"></div>
+
+    <div class="controls" aria-label="Controles">
+      <button id="prev" type="button" aria-label="Anterior">‹</button>
+      <button id="pause" type="button" aria-label="Pausar">❚❚</button>
+      <button id="next" type="button" aria-label="Siguiente">›</button>
+    </div>
+  </main>
+
+  <script>
+    (() => {
+      const slides = [...document.querySelectorAll('.slide')];
+      const status = document.getElementById('status');
+      const prev = document.getElementById('prev');
+      const next = document.getElementById('next');
+      const pauseBtn = document.getElementById('pause');
+
+      let current = 0;
+      let playing = true;
+      let timer;
+
+      slides.forEach(() => {
+        const bar = document.createElement('span');
+        status.appendChild(bar);
+      });
+
+      function show(nextIndex) {
+        current = (nextIndex + slides.length) % slides.length;
+
+        slides.forEach((slide, index) => {
+          slide.classList.toggle('active', index === current);
+          slide.setAttribute('aria-hidden', index !== current);
+        });
+
+        const bars = [...status.children];
+        bars.forEach((bar, index) => {
+          bar.classList.remove('current', 'complete');
+          if (index < current) bar.classList.add('complete');
+          if (index === current) bar.classList.add('current');
+        });
+
+        clearTimeout(timer);
+
+        if (playing) {
+          timer = setTimeout(() => show(current + 1), 5800);
+        }
+      }
+
+      prev.addEventListener('click', () => show(current - 1));
+      next.addEventListener('click', () => show(current + 1));
+
+      pauseBtn.addEventListener('click', () => {
+        playing = !playing;
+        pauseBtn.textContent = playing ? '❚❚' : '▶';
+        pauseBtn.setAttribute('aria-label', playing ? 'Pausar' : 'Reanudar');
+        show(current);
+      });
+
+      document.addEventListener('keydown', (event) => {
+        if (event.key === 'ArrowLeft') show(current - 1);
+        if (event.key === 'ArrowRight') show(current + 1);
+        if (event.code === 'Space') {
+          event.preventDefault();
+          pauseBtn.click();
+        }
+      });
+
+      show(0);
+    })();
+  </script>
+</body>
+</html>
